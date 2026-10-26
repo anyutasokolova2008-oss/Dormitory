@@ -738,6 +738,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
   panel: {fileID: 1490009931}
+  testEvent: {fileID: 11400000, guid: 9d27e1c6b90892d428fe7bd811ad15c9, type: 2}
+  testChoiceIndex: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
