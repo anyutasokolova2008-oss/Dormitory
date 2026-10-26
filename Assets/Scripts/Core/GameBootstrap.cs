@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class GameBootstrap : MonoBehaviour
 {
+    [SerializeField] private ResourcePanel panel;
+
     private ResourceManager resources;
 
     void Start()
     {
         resources = new ResourceManager();
-        resources.OnChanged += type => Debug.Log($"Изменился ресурс {type}. " +
-            $"Бюджет: {resources.budget}, репутация: {resources.reputation}, " +
-            $"энергия: {resources.energy}, время: {resources.time}");
+        panel.Bind(resources);
     }
 
     [ContextMenu("Тест: штраф студенту")]
