@@ -4,24 +4,37 @@ public class GameBootstrap : MonoBehaviour
 {
     [SerializeField] private ResourcePanel panel;
 
-    private ResourceManager resources;
+    private GameState state;
 
     void Start()
     {
-        resources = new ResourceManager();
-        panel.Bind(resources);
+        state = GameState.CreateNew();
+        panel.Bind(state.resources);
     }
 
     [ContextMenu("Тест: штраф студенту")]
     void TestFine()
     {
-        resources.Change(ResourceType.Budget, 50);
-        resources.Change(ResourceType.Energy, -5);
+        state.resources.Change(ResourceType.Budget, 50);
+        state.resources.Change(ResourceType.Energy, -5);
+        state.GetStudent("s1").ApplyEffect(StudentStat.Discipline, 10);
+        state.GetStudent("s1").ApplyEffect(StudentStat.Attitude, -20);
     }
 
-    [ContextMenu("Тест: репутация выше максимума")]
-    void TestClamp()
+    [ContextMenu("Тест: вывести всех студентов")]
+    void TestListStudents()
     {
-        resources.Change(ResourceType.Reputation, 999);
+        foreach (var st in state.students)
+            Debug.Log($"{st.name} ({st.roomId}): дисциплина {st.discipline}, " +
+                      $"настроение {st.mood}, отношение {st.attitude}, состояние {st.GetState()}");
+    }
+
+    [ContextMenu("Тест: испортить отношение")]
+    void TestBadAttitude()
+    {
+        var st = state.GetStudent("s2");
+        st.ApplyEffect(StudentStat.Mood, -40);
+        st.ApplyEffect(StudentStat.Attitude, -50);
+        Debug.Log($"{st.name}: состояние {st.GetState()}");
     }
 }
