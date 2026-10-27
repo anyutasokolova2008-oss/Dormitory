@@ -3,8 +3,8 @@ using UnityEngine;
 public class GameBootstrap : MonoBehaviour
 {
     [SerializeField] private ResourcePanel panel;
+    [SerializeField] private EventWindow eventWindow;
     [SerializeField] private GameEvent testEvent;
-    [SerializeField] private int testChoiceIndex = 0;
 
     private GameState state;
     private EventManager eventManager;
@@ -14,22 +14,18 @@ public class GameBootstrap : MonoBehaviour
         state = GameState.CreateNew();
         eventManager = new EventManager();
         panel.Bind(state.resources);
+        eventWindow.Hide();
     }
 
-    [ContextMenu("Тест: показать событие")]
-    void TestShowEvent()
-    {
-        Debug.Log($"{testEvent.title}: {testEvent.description}");
-        for (int i = 0; i < testEvent.choices.Count; i++)
-            Debug.Log($"  [{i}] {testEvent.choices[i].text}");
-    }
-
-    [ContextMenu("Тест: применить выбранный вариант")]
-    void TestApplyChoice()
+    [ContextMenu("Тест: показать окно события")]
+    void TestShowWindow()
     {
         var student = state.students[0];
-        bool ok = eventManager.TryApplyChoice(state, testEvent, testChoiceIndex, student, null);
-        Debug.Log(ok ? "Вариант применён" : "Вариант недоступен");
+        eventWindow.Show(testEvent, state, index =>
+        {
+            bool ok = eventManager.TryApplyChoice(state, testEvent, index, student, null);
+            Debug.Log(ok ? $"Выбран вариант {index}" : "Вариант недоступен");
+        });
     }
 
     [ContextMenu("Тест: вывести всех студентов")]
