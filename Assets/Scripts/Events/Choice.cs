@@ -1,5 +1,14 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+
+[Serializable]
+public class DelayedSpec
+{
+    public GameEvent ev;
+    public int daysLater = 3;
+    [Range(0f, 1f)] public float chance = 1f;   // 0.3 = 30 %
+}
 
 [Serializable]
 public class Choice
@@ -9,8 +18,8 @@ public class Choice
     public int energyCost;
     public int timeCost;
     public List<Effect> effects = new List<Effect>();
+    public List<DelayedSpec> delayed = new List<DelayedSpec>();
 
-    // Вариант доступен, если хватает энергии, времени и бюджет не уйдёт ниже -1000
     public bool IsAvailable(GameState state)
     {
         var r = state.resources;

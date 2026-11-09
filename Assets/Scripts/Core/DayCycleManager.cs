@@ -36,7 +36,13 @@ public class DayCycleManager
         r.Change(ResourceType.Time, 14);
 
         today.Clear();
-        foreach (var e in events.PickDayEvents(state, allEvents, EventsPerDay, rng))
+
+        // Сначала последствия прошлых решений, потом случайные события
+        var due = events.TakeDueEvents(state, allEvents);
+        foreach (var e in due) today.Enqueue(e);
+
+        int rest = Mathf.Max(0, EventsPerDay - due.Count);
+        foreach (var e in events.PickDayEvents(state, allEvents, rest, rng))
             today.Enqueue(e);
     }
 

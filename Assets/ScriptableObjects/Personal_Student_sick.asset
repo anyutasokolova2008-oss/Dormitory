@@ -18,9 +18,12 @@ MonoBehaviour:
   description: "\u0421\u0442\u0443\u0434\u0435\u043D\u0442 \u043D\u0435 \u0432\u044B\u0445\u043E\u0434\u0438\u0442 \u0438\u0437 \u043A\u043E\u043C\u043D\u0430\u0442\u044B \u0432\u0442\u043E\u0440\u044B\u0435 \u0441\u0443\u0442\u043A\u0438: \u0436\u0430\u0440 \u0438 \u043A\u0430\u0448\u0435\u043B\u044C. \u0421\u043E\u0441\u0435\u0434\u0438 \u0431\u043E\u044F\u0442\u0441\u044F \u0437\u0430\u0440\u0430\u0437\u0438\u0442\u044C\u0441\u044F."
   baseWeight: 1
   requiresStudent: 1
+  usesRoom: 0
+  delayedOnly: 0
+  roomType: 2
   choices:
   - text: "\u0412\u044B\u0437\u0432\u0430\u0442\u044C \u0432\u0440\u0430\u0447\u0430 \u0438 \u043F\u0440\u0438\u043D\u0435\u0441\u0442\u0438 \u0447\u0430\u0439\t"
-    budgetCost: 100
+    budgetCost: 20
     energyCost: 10
     timeCost: 1
     effects:
@@ -30,6 +33,7 @@ MonoBehaviour:
       value: 20
     - target: 1
       value: 1
+    delayed: []
   - text: "\u041F\u043E\u0437\u0432\u043E\u043D\u0438\u0442\u044C \u0435\u0433\u043E \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044F\u043C"
     budgetCost: 0
     energyCost: 5
@@ -39,6 +43,7 @@ MonoBehaviour:
       value: 5
     - target: 7
       value: 5
+    delayed: []
   - text: "\u042D\u0442\u043E \u043D\u0435 \u043C\u043E\u044F \u0437\u0430\u0431\u043E\u0442\u0430"
     budgetCost: 0
     energyCost: 0
@@ -50,3 +55,4 @@ MonoBehaviour:
       value: -20
     - target: 1
       value: -2
+    delayed: []

@@ -13,6 +13,7 @@ public class GameEvent : ScriptableObject
     public float baseWeight = 1f;
     public bool requiresStudent = true;
     public bool usesRoom = false;
+    public bool delayedOnly = false;   // событие появляется только как последствие
     public RoomType roomType = RoomType.Shower;
     public List<Choice> choices = new List<Choice>();
 }

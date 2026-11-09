@@ -8,6 +8,7 @@ public class GameState
     public ResourceManager resources = new ResourceManager();
     public List<Student> students = new List<Student>();
     public List<Room> rooms = new List<Room>();
+    public List<DelayedEvent> delayedQueue = new List<DelayedEvent>();
 
     // Тестовые данные: три помещения и пять проживающих (этап 3 плана)
     public static GameState CreateNew()

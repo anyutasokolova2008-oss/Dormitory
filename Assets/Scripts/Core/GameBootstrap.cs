@@ -19,8 +19,9 @@ public class GameBootstrap : MonoBehaviour
     void StartNewGame()
     {
         state = GameState.CreateNew();
-        eventManager = new EventManager();
-        dayCycle = new DayCycleManager(state, eventManager, allEvents, new System.Random());
+        var rng = new System.Random();
+        eventManager = new EventManager(rng);
+        dayCycle = new DayCycleManager(state, eventManager, allEvents, rng);
         panel.Bind(state.resources);
         StartNextDay();
     }

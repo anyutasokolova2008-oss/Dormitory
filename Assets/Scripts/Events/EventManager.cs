@@ -3,7 +3,13 @@ using System.Collections.Generic;
 
 public class EventManager
 {
-    // Последовательность из раздела 2.3: проверка, списание затрат, эффекты, история
+    private readonly System.Random rng;
+
+    public EventManager(System.Random rng)
+    {
+        this.rng = rng;
+    }
+
     public bool TryApplyChoice(GameState state, GameEvent ev, int choiceIndex, Student student, Room room)
     {
         if (choiceIndex < 0 || choiceIndex >= ev.choices.Count) return false;
@@ -19,14 +25,47 @@ public class EventManager
         foreach (var effect in choice.effects)
             effect.Apply(state, student, room);
 
+        // Отложенные последствия: случайная проверка, потом очередь
+        foreach (var d in choice.delayed)
+        {
+            if (d.ev == null) continue;
+            if (rng.NextDouble() > d.chance) continue;
+            state.delayedQueue.Add(new DelayedEvent
+            {
+                eventId = d.ev.eventId,
+                dueDay = state.day + d.daysLater,
+                studentId = student?.id,
+                roomId = room?.id
+            });
+        }
+
         student?.AddToHistory($"День {state.day}: {ev.title} -> {choice.text}");
         return true;
     }
 
-    // Выбирает события на день без повторов внутри одного дня
+    // События, срок которых наступил (утро дня)
+    public List<DayEvent> TakeDueEvents(GameState state, List<GameEvent> all)
+    {
+        var result = new List<DayEvent>();
+        var due = state.delayedQueue.FindAll(d => d.dueDay <= state.day);
+        foreach (var d in due)
+        {
+            state.delayedQueue.Remove(d);
+            var ev = all.Find(e => e.eventId == d.eventId);
+            if (ev == null) continue;
+            result.Add(new DayEvent
+            {
+                ev = ev,
+                student = d.studentId == null ? null : state.GetStudent(d.studentId),
+                room = d.roomId == null ? null : state.GetRoom(d.roomId)
+            });
+        }
+        return result;
+    }
+
     public List<DayEvent> PickDayEvents(GameState state, List<GameEvent> all, int count, System.Random rng)
     {
-        var pool = new List<GameEvent>(all);
+        var pool = all.FindAll(e => !e.delayedOnly);   // последствия случайно не выпадают
         var result = new List<DayEvent>();
 
         while (result.Count < count && pool.Count > 0)
@@ -53,7 +92,6 @@ public class EventManager
         return pool[pool.Count - 1];
     }
 
-    // Подставляет случайного студента и подходящее помещение
     DayEvent BuildDayEvent(GameState state, GameEvent ev, System.Random rng)
     {
         var de = new DayEvent { ev = ev };
@@ -72,7 +110,7 @@ public class EventManager
         }
         else if (de.student != null)
         {
-            de.room = state.GetRoom(de.student.roomId); // событие в комнате самого студента
+            de.room = state.GetRoom(de.student.roomId);
         }
         return de;
     }
