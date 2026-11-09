@@ -12,11 +12,13 @@ public class EventWindow : MonoBehaviour
     [SerializeField] private Transform buttonsContainer;
     [SerializeField] private Button buttonPrefab;
 
-    public void Show(GameEvent ev, GameState state, Action<int> onChosen)
+    public void Show(GameEvent ev, GameState state, Action<int> onChosen, string context = null)
     {
         Clear();
         titleText.text = ev.title;
-        descriptionText.text = ev.description;
+        descriptionText.text = string.IsNullOrEmpty(context)
+            ? ev.description
+            : context + "\n\n" + ev.description;
 
         for (int i = 0; i < ev.choices.Count; i++)
         {
@@ -47,7 +49,6 @@ public class EventWindow : MonoBehaviour
             Destroy(child.gameObject);
     }
 
-    // Подсказка о стоимости варианта (раздел 2.1 документа)
     string FormatChoice(Choice c)
     {
         var costs = new List<string>();

@@ -12,5 +12,7 @@ public class GameEvent : ScriptableObject
     [TextArea(3, 8)] public string description;
     public float baseWeight = 1f;
     public bool requiresStudent = true;
+    public bool usesRoom = false;
+    public RoomType roomType = RoomType.Shower;
     public List<Choice> choices = new List<Choice>();
 }

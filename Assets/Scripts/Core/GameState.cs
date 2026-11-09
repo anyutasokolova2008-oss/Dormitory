@@ -17,6 +17,7 @@ public class GameState
         s.rooms.Add(new Room("r101", "Комната 101", RoomType.Dorm, 1, 2));
         s.rooms.Add(new Room("r102", "Комната 102", RoomType.Dorm, 1, 2));
         s.rooms.Add(new Room("shower1", "Душевая 1 этажа", RoomType.Shower, 1, 0));
+        s.rooms.Add(new Room("kitchen1", "Кухня 1 этажа", RoomType.Kitchen, 1, 0));
 
         s.students.Add(new Student("s1", "Артём", 2, "r101"));
         s.students.Add(new Student("s2", "Максим", 2, "r101"));
