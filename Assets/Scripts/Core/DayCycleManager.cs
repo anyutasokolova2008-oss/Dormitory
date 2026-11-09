@@ -49,8 +49,8 @@ public class DayCycleManager
         // Вечер: дотация раз в неделю и износ помещений
         if (state.day % 7 == 0)
         {
-            r.Change(ResourceType.Budget, 700);
-            sb.AppendLine("Дотация администрации: +700 руб.");
+            r.Change(ResourceType.Budget, 150);
+            sb.AppendLine("Дотация администрации: +150 руб.");
         }
         foreach (var room in state.rooms)
             room.Worsen(3, 1);
@@ -97,7 +97,7 @@ public class DayCycleManager
     public float CalculateRating()
     {
         var res = state.resources;
-        float b = Mathf.Clamp(res.budget / 5000f * 50f, 0f, 100f);
+        float b = Mathf.Clamp(res.budget / 1000f * 50f, 0f, 100f);
         float m = (float)state.students.Average(s => s.mood);
         float d = (float)state.students.Average(s => s.discipline);
         float sanitary = state.rooms.Average(r => (r.cleanliness + r.condition) / 2f);

@@ -7,7 +7,7 @@ public enum ResourceType { Budget, Reputation, Energy, Time }
 public class ResourceManager
 {
     // Начальные значения из таблицы 1.2 (позже перенесём в BalanceConfig)
-    public float budget = 5000f;
+    public float budget = 1000f;
     public int reputation = 50;
     public int energy = 100;
     public int time = 14;
@@ -42,6 +42,6 @@ public class ResourceManager
 
     public bool IsDefeated()
     {
-        return reputation < 15 || budget < -1000f;
+        return reputation < 15 || budget < -200f;
     }
 }

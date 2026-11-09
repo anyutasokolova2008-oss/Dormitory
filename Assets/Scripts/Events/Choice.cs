@@ -15,6 +15,6 @@ public class Choice
     {
         var r = state.resources;
         return r.CanAfford(budgetCost, energyCost, timeCost)
-               && r.budget - budgetCost >= -1000f;
+               && r.budget - budgetCost >= -200f;
     }
 }
