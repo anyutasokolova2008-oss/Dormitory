@@ -108,6 +108,15 @@ public class EventManager
         if (ev.usesRoom)
         {
             var rooms = state.rooms.FindAll(r => r != null && r.type == ev.roomType);
+
+            // Добавляем служебные помещения 1 этажа, чтобы события появлялись
+            // и на первом этаже, а не только на втором.
+            var floor1 = state.rooms.FindAll(r => r != null && r.floor == 1
+                && (r.type == RoomType.Office || r.type == RoomType.Guardpost
+                    || r.type == RoomType.Storage || r.type == RoomType.Corridor));
+            foreach (var r in floor1)
+                if (!rooms.Contains(r)) rooms.Add(r);
+
             if (rooms.Count == 0) return null;
             de.room = rooms[rng.Next(rooms.Count)];
         }
@@ -118,10 +127,13 @@ public class EventManager
         }
         else
         {
-            // Событие без явной привязки (например, бытовой конфликт соседей)
-            // размещаем в жилой комнате, а не в коридоре.
-            var dorms = state.rooms.FindAll(r => r != null && r.type == RoomType.Dorm);
-            if (dorms.Count > 0) de.room = dorms[rng.Next(dorms.Count)];
+            // Событие без явной привязки: часть размещаем в жилых комнатах,
+            // часть — в служебных помещениях 1 этажа.
+            var pool = state.rooms.FindAll(r => r != null
+                && (r.type == RoomType.Dorm || r.type == RoomType.Office
+                    || r.type == RoomType.Guardpost || r.type == RoomType.Storage
+                    || (r.type == RoomType.Corridor && r.floor == 1)));
+            if (pool.Count > 0) de.room = pool[rng.Next(pool.Count)];
         }
         return de;
     }

@@ -380,7 +380,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9c78d707768283a4b94582a682361124, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2131,7 +2131,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: e6177848ad1782649ac4181545894bfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4950,7 +4950,7 @@ Transform:
   m_GameObject: {fileID: 289734147}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 557.2, y: -125.59, z: 0}
+  m_LocalPosition: {x: 557.53, y: -125.731, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6803,7 +6803,7 @@ Transform:
   m_GameObject: {fileID: 405388784}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.408, y: 1.429, z: 0}
+  m_LocalPosition: {x: -1.416, y: 1.382, z: 0}
   m_LocalScale: {x: 1.3115625, y: 0.7453455, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59738,6 +59738,10 @@ MonoBehaviour:
   panel: {fileID: 1490009931}
   eventWindow: {fileID: 767009097}
   player: {fileID: 0}
+  interactPrompt: {fileID: 0}
+  useWorldPrompt: 1
+  worldPromptGap: 0.1
+  worldPromptScale: 0.8
   allEvents:
   - {fileID: 11400000, guid: df70b6d44a429ce43895b35e05d94bba, type: 2}
   - {fileID: 11400000, guid: 9d27e1c6b90892d428fe7bd811ad15c9, type: 2}
@@ -67247,7 +67251,7 @@ Transform:
   m_GameObject: {fileID: 2026558777}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.92, y: 0.4, z: 0}
+  m_LocalPosition: {x: 22.15, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
