@@ -22,6 +22,9 @@ public class EventManager
         r.Change(ResourceType.Energy, -choice.energyCost);
         r.Change(ResourceType.Time, -choice.timeCost);
 
+        // Игровое время двигается вместе с расходом часов на решение.
+        GameClock.Advance(choice.timeCost);
+
         foreach (var effect in choice.effects)
             effect.Apply(state, student, room);
 
@@ -104,13 +107,21 @@ public class EventManager
 
         if (ev.usesRoom)
         {
-            var rooms = state.rooms.FindAll(r => r.type == ev.roomType);
+            var rooms = state.rooms.FindAll(r => r != null && r.type == ev.roomType);
             if (rooms.Count == 0) return null;
             de.room = rooms[rng.Next(rooms.Count)];
         }
         else if (de.student != null)
         {
+            // Событие, связанное с конкретным человеком, происходит в его комнате.
             de.room = state.GetRoom(de.student.roomId);
+        }
+        else
+        {
+            // Событие без явной привязки (например, бытовой конфликт соседей)
+            // размещаем в жилой комнате, а не в коридоре.
+            var dorms = state.rooms.FindAll(r => r != null && r.type == RoomType.Dorm);
+            if (dorms.Count > 0) de.room = dorms[rng.Next(dorms.Count)];
         }
         return de;
     }

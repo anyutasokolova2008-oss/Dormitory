@@ -12,6 +12,11 @@ public class EventWindow : MonoBehaviour
     [SerializeField] private Transform buttonsContainer;
     [SerializeField] private Button buttonPrefab;
 
+    // Открыто ли сейчас окно события/отчёта.
+    // Нужно, чтобы не сохранять игру в момент, когда событие уже достали
+    // из очереди, но решение ещё не принято (иначе событие потеряется).
+    public bool IsOpen => root != null && root.activeSelf;
+
     public void Show(GameEvent ev, GameState state, Action<int> onChosen, string context = null)
     {
         Clear();
