@@ -15,5 +15,9 @@ public class GameEvent : ScriptableObject
     public bool usesRoom = false;
     public bool delayedOnly = false;   // событие появляется только как последствие
     public RoomType roomType = RoomType.Shower;
+
+    // Если заполнено — событие жёстко привязано к этой комнате (например office1).
+    // Иначе место выбирается по roomType (старое поведение).
+    public string roomId = "";
     public List<Choice> choices = new List<Choice>();
 }

@@ -21,6 +21,7 @@ MonoBehaviour:
   usesRoom: 0
   delayedOnly: 0
   roomType: 2
+  roomId: office1
   choices:
   - text: "\u0414\u0430\u0442\u044C \u043E\u0442\u0441\u0440\u043E\u0447\u043A\u0443"
     budgetCost: 0

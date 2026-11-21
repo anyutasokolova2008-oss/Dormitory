@@ -12,6 +12,11 @@ public class GameBootstrap : MonoBehaviour
     // Можно не указывать в Inspector, найдётся сам по тегу Player.
     [SerializeField] private Transform player;
 
+    [Header("Точка появления коменданта")]
+    // Перетащите сюда пустой GameObject-маркер, стоящий внутри воспитательской.
+    // Если поле пустое — используется координата из кода ниже.
+    [SerializeField] private Transform officeSpawnPoint;
+
     [Header("Подсказка взаимодействия")]
     // Можно не заполнять: если поле пустое, подсказка создастся в коде
     // внутри первого Canvas (ничего в сцене настраивать не нужно).
@@ -139,9 +144,8 @@ public class GameBootstrap : MonoBehaviour
         else Debug.LogWarning("[GameBootstrap] Объект с тегом Player не найден — игрок не будет сохранён.");
     }
 
-    // Точка появления коменданта.
-    // Координаты заданы пользователем из сцены PlayTest.
-    static readonly Vector3 OfficeSpawnPosition = new Vector3(-3.8553f, 2.02f, 0f);
+    // Исходная позиция Player в сцене PlayTest (до всех правок).
+    static readonly Vector3 OfficeSpawnPosition = new Vector3(-6.81f, 2.9f, 0f);
 
     void TeleportPlayer(Vector3 position, string roomId)
     {
@@ -503,6 +507,11 @@ public class GameBootstrap : MonoBehaviour
         if (panel != null) panel.Bind(state.resources);
         RestorePlayer(data);
         EnsureFloorTransitions();
+
+        // Старые сохранения могли записать игрока за пределами комнаты.
+        // Приводим его к точке появления в воспитательской — та же логика,
+        // что и при новой игре/следующем дне.
+        TeleportPlayerToOffice();
 
         // Восстанавливаем игровое время из сохранения.
         GameClock.SetHour(data.hour);

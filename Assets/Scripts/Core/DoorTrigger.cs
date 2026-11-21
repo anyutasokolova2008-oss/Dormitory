@@ -136,8 +136,14 @@ public class DoorTrigger : MonoBehaviour
         var rb = player.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
+            // Без снятия интерполяции игrok «вылетает» из точки телепорта.
+            var oldInterpolation = rb.interpolation;
+            rb.interpolation = RigidbodyInterpolation2D.None;
             rb.linearVelocity = Vector2.zero;
             rb.position = target.position;
+            Physics2D.SyncTransforms();
+            rb.position = target.position;
+            rb.interpolation = oldInterpolation;
         }
         player.transform.position = target.position;
 

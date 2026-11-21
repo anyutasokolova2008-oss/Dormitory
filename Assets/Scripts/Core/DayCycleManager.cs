@@ -67,28 +67,10 @@ public class DayCycleManager
             if (!string.IsNullOrEmpty(roomId) && e.room.id == roomId) return e;
         }
 
-        if (string.IsNullOrEmpty(roomId)) return null;
-
-        var current = ResolveRoomInfo(roomId);
-
-        // 2) Совпадение по типу общего помещения (душ/кухня/туалет/коридор):
-        // в сцене может быть один физический экземпляр типа, поэтому допускаем
-        // открытие в любом помещении того же типа.
-        for (int i = 0; i < today.Count; i++)
-        {
-            var e = today[i];
-            if (e == null || e.room == null) continue;
-            if (IsSharedType(e.room.type) && e.room.type == current.type) return e;
-        }
-
-        // Жилые события открываются строго в своей комнате (точное совпадение выше).
+        // Событие открывается строго в своей комнате.
+        // Раньше здесь был фолбэк по типу помещения: из-за него событие
+        // кухни/душа открывалось в любой комнате того же типа («как попало»).
         return null;
-    }
-
-    static bool IsSharedType(RoomType type)
-    {
-        return type == RoomType.Shower || type == RoomType.Kitchen
-            || type == RoomType.Toilet || type == RoomType.Corridor;
     }
 
     // Определяет тип/этаж текущей комнаты. Работает даже если id (например r208)
